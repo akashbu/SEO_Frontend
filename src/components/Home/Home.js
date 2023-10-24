@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import './Home.css';
+import axios from 'axios';
+
 
 const Home = () => {
   const customFontStyle = {
@@ -9,6 +11,19 @@ const Home = () => {
     color: 'purple',
 
   };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/');
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   function selectAll(){
     console.log("select all selected");

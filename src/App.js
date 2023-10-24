@@ -9,6 +9,7 @@ import Guide from './components/Guide/Guide'
 import Blockers from './components/Blockers/Blockers'
 import Footer from './components/Footer/Footer'; 
 
+
 function App() { 
 
   return ( 
