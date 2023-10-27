@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import { TextField, Button, Container, Typography, InputAdornment, InputLabel } from "@mui/material";
 import "./Home.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,11 @@ import Box from "@mui/material/Box";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
-  const [responseData, setResponseData] = useState(null);
+  const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
+  const typingSpeed = 100; 
   const navigate = useNavigate();
+  const placeholderTexts = ["Enter the URL here", "Enter URL to webscrape"];
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [checkboxValues, setCheckboxValues] = useState({
     selectAll: false,
@@ -24,12 +27,43 @@ const Home = () => {
 
 
   const customFontStyle = {
-    fontFamily:
-      'cursive, "Comic Sans MS", sans-serif, "Zilla Slab", "Bungee", cursive',
-    fontSize: "45px",
-    color: "blue",
-    fontWeight: "bold",
-    letterSpacing: "4px",
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: '24px',
+    color: 'black', // You can choose your preferred color
+    fontWeight: 'normal', // You can use 'normal' or 'bold' as per your preference
+  };
+
+  
+  useEffect(() => {
+    let currentIndex = 0;
+    let interval;
+
+    if (!inputValue) {
+      interval = setInterval(() => {
+        if (currentIndex <= placeholderTexts[placeholderIndex].length) {
+          setAnimatedPlaceholder(placeholderTexts[placeholderIndex].substring(0, currentIndex));
+          currentIndex++;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            setAnimatedPlaceholder("");
+            setPlaceholderIndex((prevIndex) => (prevIndex + 1) % 2);
+          }, 1000); // Wait 2 seconds before switching to the next placeholder
+        }
+      }, typingSpeed);
+    } else {
+      setAnimatedPlaceholder(""); // Reset the animated placeholder if there's user input
+      clearInterval(interval);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [placeholderIndex, inputValue]);
+
+  
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
   };
 
   const postString = async () => {
@@ -122,7 +156,7 @@ const Home = () => {
           flexWrap: "wrap",
           "& > :not(style)": {
             m: 1,
-            width: 1400,
+            width: 1600,
             height: 600,
           },
         }}
@@ -135,36 +169,30 @@ const Home = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="h3" gutterBottom>
-              🤖 Enter the URL :
-            </Typography>
+            
             <TextField
               variant="standard"
               size="small"
+              fullWidth
               InputProps={{
                 style: {
-                  ...customFontStyle,
-                  width: "100%",
+                  fontSize: "30px",
+                  marginTop: "30px", // Add margin on top
+                  borderBottom: "3px solid black", 
+                },
+              }}
+              inputProps={{
+                style: {
+                  textAlign: "center", // Center-align the placeholder text
                 },
               }}
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={handleInputChange}
+              placeholder={animatedPlaceholder}
             />
 
             <div className="checkbox">
-              <div className="checkbox-label">
-                <input
-                  type="checkbox"
-                  id="opt1"
-                  name="selectAll"
-                  checked={checkboxValues.selectAll}
-                  className="large-checkbox"
-                  onChange={handleCheckboxChange}
-                />
-                <label className="clable" htmlFor="opt1">
-                  <h3>Select All</h3>
-                </label>
-              </div>
+              
               <div className="checkbox-label">
                 <input
                   type="checkbox"
@@ -228,6 +256,19 @@ const Home = () => {
                 />
                 <label className="clable" htmlFor="opt6">
                   <h3>KMP algorithm</h3>
+                </label>
+              </div>
+              <div className="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="opt1"
+                  name="selectAll"
+                  checked={checkboxValues.selectAll}
+                  className="large-checkbox"
+                  onChange={handleCheckboxChange}
+                />
+                <label className="clable" htmlFor="opt1">
+                  <h3>Select All</h3>
                 </label>
               </div>
             </div>
