@@ -1,116 +1,91 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
-import './Home.css';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState, useEffect } from "react";
+import { TextField, Button, Container, Typography } from "@mui/material";
+import "./Home.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Home = () => {
-
   const [inputValue, setInputValue] = useState("");
   const [responseData, setResponseData] = useState(null);
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const customFontStyle = {
     fontFamily: 'cursive, "Comic Sans MS", sans-serif', // Change to your desired font
-    fontSize: '45px', // Change to your desired font size
-    color: 'purple',
-
+    fontSize: "45px", // Change to your desired font size
+    color: "purple",
   };
-
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get('http://127.0.0.1:5000/');
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
 
   const postString = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/', { data: inputValue });
-      setResponseData(response.data);
-      console.log(response.data)
-      localStorage.setItem('responseData', JSON.stringify(response.data));
+      setIsLoading(true);
+      const response = await axios.post("http://127.0.0.1:5000/", {
+        data: inputValue,
+      });
+      localStorage.setItem("responseData", JSON.stringify(response.data));
+      navigate("/main");
     } catch (error) {
       console.error("Error posting string:", error);
+    } finally {
+      setIsLoading(false); 
     }
   };
-  
-  
-// const handle = () => {
-//   const post_array = [];
-//   post_array.push({
-//     // "location_code": 2840,
-//     "keywords": ["Iphone 12"],
-//     // "date_from": "2021-08-01",
-//     // "search_partners": true 
-//   });
-//     axios({
-//       method: 'post',
-//       url: 'https://api.dataforseo.com/v3/keywords_data/google_ads/search_volume/live',
-//       auth: {
-//         username: 'akbutala@csu.fullerton.edu',
-//         password: 'f99eed1e824dce53'
-//       },
-//       data: post_array,
-//       headers: {
-//         'content-type': 'application/json'
-//       }
-//     }).then(function (response) {
-//       var result = response['data']['tasks'];
-//       // Result data
-//       console.log(result);
-//     }).catch(function (error) {
-//       console.log(error);
-//     });
-    
 
-//   }
-
-
-  function selectAll(){
+  function selectAll() {
     console.log("select all selected");
     // if already selected uncheck everything
-    // else check everything 
-  } 
-   
-  return (
+    // else check everything
+  }
+
+  return isLoading ? (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <CircularProgress style={{ margin: "20px", marginBottom:"30px" }} />
+      <Typography variant="h6">Fetching Data, please wait...</Typography>
+    </div>
+  ) : (
     <Container
       maxWidth="sm"
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '90vh',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "90vh",
       }}
     >
       <Typography variant="h3" gutterBottom>
         🤖 Enter the URL :
       </Typography>
 
-      <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <TextField 
+      <form
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <TextField
           variant="standard"
           size="large"
           onChange={(e) => setInputValue(e.target.value)}
           InputProps={{
             style: {
-              ...customFontStyle, 
-              width: '100%'
+              ...customFontStyle,
+              width: "100%",
             },
           }}
         />
 
-{/* 
+        {/* 
   <div className="checkbox-label">
   <div className="checkbox-label">
     <input type="checkbox" id="opt5" name="myCheckbox" value="opt5" className="large-checkbox" onChange={()=> selectAll()}/>
@@ -138,18 +113,20 @@ const Home = () => {
 
   </div> */}
 
-    <Button
-     variant="contained"
-     color="secondary"
-     style={{ marginTop: '20px', fontSize: '1.25rem', padding: '15px 40px' }}
-     onClick={() => {
-      postString();
-      navigate('/about');
-    }}
-    >
-    ANALYZE
-    </Button>
-
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{
+            marginTop: "20px",
+            fontSize: "1.25rem",
+            padding: "15px 40px",
+          }}
+          onClick={() => {
+            postString()
+          }}
+        >
+          ANALYZE
+        </Button>
       </form>
     </Container>
   );

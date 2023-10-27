@@ -2,12 +2,12 @@ import React from 'react';
 import Navbar from './components/Navbar'; 
 import './App.css'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
-import ShortestPath from './components/ShortestPath/ShortestPath';
 import Home from './components/Home/Home'
 import About from './components/About/About'
 import Guide from './components/Guide/Guide'
-import Blockers from './components/Blockers/Blockers'
 import Footer from './components/Footer/Footer'; 
+import MainPage from './components/WordAnalyzer/Mainpage'
+import Analyzer from './components/Visualizer/MainPage2';
 
 
 function App() { 
@@ -21,7 +21,8 @@ function App() {
         <Route path='/home' element={<Home/>} /> 
         <Route path='/about' element={<About />} /> 
         <Route path='/guide' element={<Guide />} /> 
-        <Route path='/maps' element={<ShortestPath />} /> 
+        <Route path='/main' element={<MainPage />} />
+        <Route path='/analyzer' element={<Analyzer />} /> 
       </Routes> 
       <Footer />
     </Router> 
