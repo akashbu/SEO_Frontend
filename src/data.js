@@ -100,32 +100,32 @@
     }
 ]
 
-// const handle = () => {
-//   const post_array = [];
-//   post_array.push({
-//     // "location_code": 2840,
-//     "keywords": ["Iphone 12"],
-//     // "date_from": "2021-08-01",
-//     // "search_partners": true 
-//   });
-//     axios({
-//       method: 'post',
-//       url: 'https://api.dataforseo.com/v3/keywords_data/google_ads/search_volume/live',
-//       auth: {
-//         username: 'akbutala@csu.fullerton.edu',
-//         password: 'f99eed1e824dce53'
-//       },
-//       data: post_array,
-//       headers: {
-//         'content-type': 'application/json'
-//       }
-//     }).then(function (response) {
-//       var result = response['data']['tasks'];
-//       // Result data
-//       console.log(result);
-//     }).catch(function (error) {
-//       console.log(error);
-//     });
+const handle = () => {
+  const post_array = [];
+  post_array.push({
+    // "location_code": 2840,
+    "keywords": ["Iphone 12"],
+    // "date_from": "2021-08-01",
+    // "search_partners": true 
+  });
+    axios({
+      method: 'post',
+      url: 'https://api.dataforseo.com/v3/keywords_data/google_ads/search_volume/live',
+      auth: {
+        username: 'akbutala@csu.fullerton.edu',
+        password: 'f99eed1e824dce53'
+      },
+      data: post_array,
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(function (response) {
+      var result = response['data']['tasks'];
+      // Result data
+      console.log(result);
+    }).catch(function (error) {
+      console.log(error);
+    });
     
 
-//   }
+  }

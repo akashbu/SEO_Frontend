@@ -15,50 +15,42 @@ import './About.css';
 const teamMembers = [
   {
     name: "Keshav Daga",
-    role: "Front-End Developer",
-    email: "keshav@example.com",
+    email: "kd81@csu.fullerton.edu",
     image: keshavImage,
   },
   {
     name: "Vedita Deshpande",
-    role: "Back-End Developer",
-    email: "vedita@example.com",
+    email: "vedita@csu.fullerton.edu",
     image: veditaImage,
   },
   {
     name: "Akash Butala",
-    role: "UI/UX Designer",
-    email: "akash@example.com",
+    email: "akbutala@csu.fullerton.edu",
     image: aakashImage,
   },
   {
     name: "Vaishnavi More",
-    role: "Full-Stack Developer",
-    email: "vaishnavi@example.com",
+    email: "vaishnavimore@csu.fullerton.edu",
     image: vaishnaviImage,
   },
   {
     name: "Sri Sai Navya Manchikalapudi",
-    role: "Mobile Developer",
-    email: "navya@example.com",
+    email: "srisainavya@csu.fullerton.edu",
     image: navyaImage,
   },
   {
     name: "Chathrapathi Nikhil Kandagatla",
-    role: "Data Scientist",
-    email: "nikhil@example.com",
+    email: "chathrapathinikhil@csu.fullerton.edu",
     image: nikhilImage,
   },
   {
     name: "Hari Preetham Reddy Takuru",
-    role: "Database Administrator",
-    email: "preetham@example.com",
+    email: "haripreetham@csu.fullerton.edu",
     image: preethamImage,
   },
   {
     name: "Mourya Velampati",
-    role: "DevOps Engineer",
-    email: "mourya@example.com",
+    email: "mourya@csu.fullerton.edu",
     image: mouryaImage,
   },
 ];

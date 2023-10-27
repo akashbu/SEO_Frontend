@@ -8,6 +8,7 @@ import Guide from './components/Guide/Guide'
 import Footer from './components/Footer/Footer'; 
 import MainPage from './components/WordAnalyzer/Mainpage'
 import Analyzer from './components/Visualizer/MainPage2';
+import Recommendation from './components/Recommendation/Recommendation'
 
 
 function App() { 
@@ -22,7 +23,8 @@ function App() {
         <Route path='/about' element={<About />} /> 
         <Route path='/guide' element={<Guide />} /> 
         <Route path='/main' element={<MainPage />} />
-        <Route path='/analyzer' element={<Analyzer />} /> 
+        <Route path='/analyzer' element={<Analyzer />} />
+        <Route path='/recommender' element={<Recommendation/>}/>
       </Routes> 
       <Footer />
     </Router> 
