@@ -7,7 +7,7 @@ const Footer = () => {
   const customTheme = createTheme({
     palette: {
       primary: {
-        main: '#008080', 
+        main: '#000000', 
       },
       type: 'dark', 
     },

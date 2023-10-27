@@ -114,9 +114,9 @@ const AnimatedBarGraph = ({data}) => {
   return (
     <div>
       <h2>Algorithm Efficiency</h2>
-      <BarChart width={800} height={300} data={animationData}>
+      <BarChart width={800} height={300}  data={animationData}>
         <XAxis dataKey="algorithm" type="category" />
-        <YAxis dataKey="Efficiency" type="number" domain={[0, 'dataMax']} />
+        <YAxis dataKey="Efficiency" type="number" domain={[0, 'dataMax']} tickFormatter={(value) => value.toFixed(2)}/>
         <Tooltip />
         <Legend />
         <Bar dataKey="Efficiency">

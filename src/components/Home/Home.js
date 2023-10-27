@@ -4,40 +4,94 @@ import "./Home.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [responseData, setResponseData] = useState(null);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [checkboxValues, setCheckboxValues] = useState({
+    selectAll: false,
+    rabinKarp: false,
+    suffixTree: false,
+    suffixArray: false,
+    naiveStringMatching: false,
+    kmpAlgorithm: false,
+  });
+
+
 
   const customFontStyle = {
-    fontFamily: 'cursive, "Comic Sans MS", sans-serif', // Change to your desired font
-    fontSize: "45px", // Change to your desired font size
-    color: "purple",
+    fontFamily:
+      'cursive, "Comic Sans MS", sans-serif, "Zilla Slab", "Bungee", cursive',
+    fontSize: "45px",
+    color: "blue",
+    fontWeight: "bold",
+    letterSpacing: "4px",
   };
 
-
   const postString = async () => {
+    event.preventDefault();
+
+
     try {
       setIsLoading(true);
-      const response = await axios.post("http://127.0.0.1:5000/", {
+
+      const selectedCheckboxes = Object.keys(checkboxValues)
+      .filter((key) => checkboxValues[key])
+      .map((key) => key);
+  
+      const dataToSend = {
         data: inputValue,
-      });
+        selectedCheckboxes,
+      };
+
+      const response = await axios.post("http://127.0.0.1:5000/", dataToSend);
       localStorage.setItem("responseData", JSON.stringify(response.data));
       navigate("/main");
     } catch (error) {
       console.error("Error posting string:", error);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
-  function selectAll() {
-    console.log("select all selected");
-    // if already selected uncheck everything
-    // else check everything
-  }
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+
+    if (name === "selectAll") {
+      const newValues = {
+        selectAll: checked,
+        rabinKarp: checked,
+        suffixTree: checked,
+        suffixArray: checked,
+        naiveStringMatching: checked,
+        kmpAlgorithm: checked,
+      };
+      setCheckboxValues(newValues);
+    } else {
+      setCheckboxValues({
+        ...checkboxValues,
+        [name]: checked,
+        selectAll: false,
+      });
+    }
+  };
+
+
+  const clearInputAndCheckboxes = () => {
+    setInputValue("");
+    setCheckboxValues({
+      selectAll: false,
+      rabinKarp: false,
+      suffixTree: false,
+      suffixArray: false,
+      naiveStringMatching: false,
+      kmpAlgorithm: false,
+    });
+  };
 
   return isLoading ? (
     <div
@@ -48,7 +102,7 @@ const Home = () => {
         height: "100vh",
       }}
     >
-      <CircularProgress style={{ margin: "20px", marginBottom:"30px" }} />
+      <CircularProgress style={{ margin: "20px", marginBottom: "30px" }} />
       <Typography variant="h6">Fetching Data, please wait...</Typography>
     </div>
   ) : (
@@ -59,75 +113,155 @@ const Home = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "90vh",
+        height: "100vh",
       }}
     >
-      <Typography variant="h3" gutterBottom>
-        🤖 Enter the URL :
-      </Typography>
-
-      <form
-        style={{
+      <Box
+        sx={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          flexWrap: "wrap",
+          "& > :not(style)": {
+            m: 1,
+            width: 1400,
+            height: 600,
+          },
         }}
       >
-        <TextField
-          variant="standard"
-          size="large"
-          onChange={(e) => setInputValue(e.target.value)}
-          InputProps={{
-            style: {
-              ...customFontStyle,
-              width: "100%",
-            },
-          }}
-        />
+        <Paper elevation={24}>
+          <form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h3" gutterBottom>
+              🤖 Enter the URL :
+            </Typography>
+            <TextField
+              variant="standard"
+              size="small"
+              InputProps={{
+                style: {
+                  ...customFontStyle,
+                  width: "100%",
+                },
+              }}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
 
-        {/* 
-  <div className="checkbox-label">
-  <div className="checkbox-label">
-    <input type="checkbox" id="opt5" name="myCheckbox" value="opt5" className="large-checkbox" onChange={()=> selectAll()}/>
-    <label htmlFor="opt1"><h3>Select All</h3></label>
-    </div>
-    <input type="checkbox" id="opt1" name="myCheckbox" value="opt1" className="large-checkbox" />
-    <label htmlFor="opt1"><h3>Rabin-Karp</h3></label>
-  </div>
-  <div className="checkbox-label">
-    <input type="checkbox" id="opt2" name="myCheckbox" value="opt2" className="large-checkbox" />
-    <label htmlFor="opt2"><h3>Suffix Tree</h3></label>
-  </div>
-  <div className="checkbox-label">
-    <input type="checkbox" id="opt3" name="myCheckbox" value="opt3" className="large-checkbox" />
-    <label htmlFor="opt3"><h3>Suffix Array</h3></label>
-  </div>
-  <div className="checkbox-label">
-    <input type="checkbox" id="opt4" name="myCheckbox" value="opt4" className="large-checkbox" />
-    <label htmlFor="opt4"><h3>Naive String Matching</h3></label>
+            <div className="checkbox">
+              <div className="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="opt1"
+                  name="selectAll"
+                  checked={checkboxValues.selectAll}
+                  className="large-checkbox"
+                  onChange={handleCheckboxChange}
+                />
+                <label className="clable" htmlFor="opt1">
+                  <h3>Select All</h3>
+                </label>
+              </div>
+              <div className="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="opt2"
+                  name="rabinKarp"
+                  checked={checkboxValues.rabinKarp}
+                  className="large-checkbox"
+                  onChange={handleCheckboxChange}
+                />
+                <label className="clable" htmlFor="opt2">
+                  <h3>Rabin-Karp</h3>
+                </label>
+              </div>
+              <div className="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="opt3"
+                  name="suffixTree"
+                  checked={checkboxValues.suffixTree}
+                  className="large-checkbox"
+                  onChange={handleCheckboxChange}
+                />
+                <label className="clable" htmlFor="opt3">
+                  <h3>Suffix Tree</h3>
+                </label>
+              </div>
+              <div className="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="opt4"
+                  name="suffixArray"
+                  checked={checkboxValues.suffixArray}
+                  className="large-checkbox"
+                  onChange={handleCheckboxChange}
+                />
+                <label className="clable" htmlFor="opt4">
+                  <h3>Suffix Array</h3>
+                </label>
+              </div>
+              <div className="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="opt5"
+                  name="naiveStringMatching"
+                  checked={checkboxValues.naiveStringMatching}
+                  className="large-checkbox"
+                  onChange={handleCheckboxChange}
+                />
+                <label className="clable" htmlFor="opt5">
+                  <h3>Naive String Matching</h3>
+                </label>
+              </div>
+              <div className="checkbox-label">
+                <input
+                  type="checkbox"
+                  id="opt6"
+                  name="kmpAlgorithm"
+                  checked={checkboxValues.kmpAlgorithm}
+                  className="large-checkbox"
+                  onChange={handleCheckboxChange}
+                />
+                <label className="clable" htmlFor="opt6">
+                  <h3>KMP algorithm</h3>
+                </label>
+              </div>
+            </div>
 
-    <div className="checkbox-label">
-    <input type="checkbox" id="opt5" name="myCheckbox" value="opt5" className="large-checkbox" />
-    <label htmlFor="opt1"><h3>KMP algorithm</h3></label>
-  </div>
-
-  </div> */}
-
-        <Button
-          variant="contained"
-          color="secondary"
-          style={{
-            marginTop: "20px",
-            fontSize: "1.25rem",
-            padding: "15px 40px",
-          }}
-          onClick={() => {
-            postString()
-          }}
-        >
-          ANALYZE
-        </Button>
-      </form>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              style={{
+                marginTop: "20px",
+                fontSize: "1.25rem",
+                padding: "15px 40px",
+              }}
+              onClick={() => {
+                postString();
+              }}
+            >
+              ANALYZE
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{
+                marginTop: "20px",
+                fontSize: "1.25rem",
+                padding: "15px 40px",
+              }}
+              onClick={clearInputAndCheckboxes}
+            >
+              REFRESH
+            </Button>
+          </form>
+        </Paper>
+      </Box>
     </Container>
   );
 };

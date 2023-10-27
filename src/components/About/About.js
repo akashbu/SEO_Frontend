@@ -1,86 +1,124 @@
 // Import React and required components
-import React from 'react'; 
-import Marquee from "react-fast-marquee";
-import img1 from "../../image/keshav.jpg";
-import img2 from "../../image/vedita.jpg";
-import img3 from "../../image/aakash.png";
-import img4 from "../../image/vaishnavi.jpg";
-import img5 from "../../image/navya.png";
-import img6 from "../../image/nikhil.jpg";
-import img7 from "../../image/preetham.jpg";
-import img8 from "../../image/mourya.png";
+import React from 'react';
+import { Container, Typography, Grid, Card, CardContent, CardMedia } from '@mui/material';
+import { styled } from '@mui/system';
+import keshavImage from "../../image/keshav.jpg";
+import veditaImage from "../../image/vedita.jpg";
+import aakashImage from "../../image/aakash.png";
+import vaishnaviImage from "../../image/vaishnavi.jpg";
+import navyaImage from "../../image/navya.png";
+import nikhilImage from "../../image/nikhil.jpg";
+import preethamImage from "../../image/preetham.jpg";
+import mouryaImage from "../../image/mourya.png";
 import './About.css';
 
-// Functional component for the About page
-const About = () => { 
-  return ( 
-    // Main container for the About page
-    <div className="about-container">
-      <div className="content">
-        {/* Section for main content */}
-        <h1>Meet Our Team</h1>
-        <p>
-          Welcome to our map navigation application! We are a dedicated team of developers and enthusiasts passionate about simplifying your journeys and optimizing your routes. Our mission is to provide you with a seamless navigation experience that takes the stress out of travel, whether it's for your daily commute or an exciting adventure.
-        </p>
-      </div>
-      <div className="marquee">
-        {/* Marquee for displaying images and profile information */}
-        <Marquee gradient={true} pauseOnHover={true} delay={0} speed={100}>
-          {/* Individual image and profile information */}
-          <div className="image-wrapper">
-            <img src={img1} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Keshav Daga</h1>
-            </div>
-          </div>
-          {/* Repeat for other team members */}
-          <div className="image-wrapper">
-            <img src={img2} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Vedita Deshpande</h1>
-            </div>
-          </div>
-          <div className="image-wrapper">
-            <img src={img3} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Akash Butala</h1>
-            </div>
-          </div>
-          <div className="image-wrapper">
-            <img src={img4} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Vaishnavi More</h1>
-            </div>
-          </div>
-          <div className="image-wrapper">
-            <img src={img5} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Sri Sai Navya Manchikalapudi</h1>
-            </div>
-          </div>
-          <div className="image-wrapper">
-            <img src={img6} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Chathrapathi Nikhil Kandagatla</h1>
-            </div>
-          </div>
-          <div className="image-wrapper">
-            <img src={img7} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Hari Preetham Reddy Takuru</h1>
-            </div>
-          </div>
-          <div className="image-wrapper">
-            <img src={img8} height={300} width={300} alt="" />
-            <div className="profile-info">
-              <h1>Mourya Velampati </h1>
-            </div>
-          </div>
-        </Marquee>
-      </div>
-    </div>
-  ); 
-}; 
+const teamMembers = [
+  {
+    name: "Keshav Daga",
+    role: "Front-End Developer",
+    email: "keshav@example.com",
+    image: keshavImage,
+  },
+  {
+    name: "Vedita Deshpande",
+    role: "Back-End Developer",
+    email: "vedita@example.com",
+    image: veditaImage,
+  },
+  {
+    name: "Akash Butala",
+    role: "UI/UX Designer",
+    email: "akash@example.com",
+    image: aakashImage,
+  },
+  {
+    name: "Vaishnavi More",
+    role: "Full-Stack Developer",
+    email: "vaishnavi@example.com",
+    image: vaishnaviImage,
+  },
+  {
+    name: "Sri Sai Navya Manchikalapudi",
+    role: "Mobile Developer",
+    email: "navya@example.com",
+    image: navyaImage,
+  },
+  {
+    name: "Chathrapathi Nikhil Kandagatla",
+    role: "Data Scientist",
+    email: "nikhil@example.com",
+    image: nikhilImage,
+  },
+  {
+    name: "Hari Preetham Reddy Takuru",
+    role: "Database Administrator",
+    email: "preetham@example.com",
+    image: preethamImage,
+  },
+  {
+    name: "Mourya Velampati",
+    role: "DevOps Engineer",
+    email: "mourya@example.com",
+    image: mouryaImage,
+  },
+];
 
-// Export the About component
+const AboutContainer = styled(Container)(() => ({
+  paddingTop: '3rem',
+  paddingBottom: '3rem',
+}));
+
+const ProfileCard = styled(Card)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+}));
+
+const CardMediaStyled = styled(CardMedia)(() => ({
+  width: 160,
+  height: 160,
+  borderRadius: '50%',
+  objectFit: 'cover',
+}));
+
+const CardContentStyled = styled(CardContent)(() => ({
+  textAlign: 'center',
+}));
+
+const About = () => {
+  return (
+    <AboutContainer>
+      <Typography variant="h4" gutterBottom>
+        Meet Our Team
+      </Typography>
+      <Typography variant="body1" gutterBottom><b>
+        Welcome to our SEO Analyzer!  Here are our dedicated team members info: 
+     </b> </Typography>
+      <Grid container spacing={2}>
+        {teamMembers.map((member, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <ProfileCard>
+              <CardMediaStyled
+                component="img"
+                alt={member.name}
+                image={member.image}
+              />
+              <CardContentStyled>
+                <Typography variant="h6" component="div">
+                  {member.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {member.role}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Email: {member.email}
+                </Typography>
+              </CardContentStyled>
+            </ProfileCard>
+          </Grid>
+        ))}
+      </Grid>
+    </AboutContainer>
+  );
+};
 export default About;
