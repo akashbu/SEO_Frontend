@@ -33,13 +33,18 @@ const MainPage = () => {
             </Typography>
             <Demo data={responseData?.data}/>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Link to="/home">
+                <Button variant="contained" size="small" style={{ backgroundColor: 'blue', margin: "10px" }}>
+                  Back
+                </Button>
+              </Link>
               <Link to="/analyzer">
                 <Button variant="contained" size="small" style={{ backgroundColor: 'red', margin: "10px" }}>
                   Analyzer
                 </Button>
               </Link>
               <Link to="/recommender">
-                <Button variant="contained" size="small" style={{ backgroundColor: 'blue', margin: "10px" }}>
+                <Button variant="contained" size="small" style={{ backgroundColor: 'green', margin: "10px" }}>
                   Recommender
                 </Button>
               </Link>
