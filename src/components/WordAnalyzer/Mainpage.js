@@ -25,31 +25,39 @@ const MainPage = () => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop:"60px", marginBottom:"30px" }}>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+          <Grid item xs={6}>
           <Paper elevation={3} style={{ padding: '20px' }}>
             <br></br>
-            <Typography align='center' variant="h5">Keywords Count</Typography>
+            <Typography align='center' variant="h5" style={{ fontSize: '30px', fontWeight: 'bold' }}>
+              Keywords Count
+            </Typography>
             <Demo data={responseData?.data}/>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Link to="/analyzer">
+                <Button variant="contained" size="small" style={{ backgroundColor: 'red', margin: "10px" }}>
+                  Analyzer
+                </Button>
+              </Link>
+              <Link to="/recommender">
+                <Button variant="contained" size="small" style={{ backgroundColor: 'blue', margin: "10px" }}>
+                  Recommender
+                </Button>
+              </Link>
+            </div>
           </Paper>
         </Grid>
+
         <Grid item xs={6}>
-          <Paper elevation={3} style={{ padding: '20px', marginBottom:"30px" }}>
-            <br></br>
-            <Typography align='center' variant="h5">Word Cloud</Typography>
-            <TextSphere data={responseData?.data}/>
-            <br></br>
-            <Link to="/analyzer">
-              <Button variant="contained" size="small" style={{ backgroundColor: 'red', margin:"10px" }}>
-                Analyzer
-              </Button>
-            </Link>
-            <Link to="/recommender">
-              <Button variant="contained" size="small">
-                Recommender
-              </Button>
-            </Link>
-          </Paper>
+        <Paper elevation={3} style={{ padding: '20px', marginBottom: "30px", maxHeight: '920px', overflow: 'auto' }}>
+          <br></br>
+          <Typography align='center' variant="h5" style={{ fontSize: '30px', fontWeight: 'bold' }}>
+            Word Cloud
+          </Typography>
+          <TextSphere data={responseData?.data} />
+          <br></br>
+        </Paper>
         </Grid>
+
       </Grid>
     </div>
   );
