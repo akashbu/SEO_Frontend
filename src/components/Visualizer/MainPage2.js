@@ -26,6 +26,10 @@ const MainPage2 = () => {
     navigate(-1); // This will take you back to the previous page in the history stack
   };
 
+  const handleRefreshClick = () => {
+    navigate(0); // This will take you back to the previous page in the history stack
+  };
+
   return (
     <div className="main-page-container">
       <div className="charts-container">
@@ -39,6 +43,9 @@ const MainPage2 = () => {
         </div>
       </div>
       <div className="button-container">
+        <Button variant="contained" color="secondary" onClick={handleRefreshClick} style={{ marginRight: '10px' }}>
+          Refresh
+        </Button>
         <Button variant="contained" color="primary" onClick={handleBackClick}>
           Back
         </Button>
