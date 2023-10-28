@@ -24,7 +24,18 @@ const Home = () => {
     kmpAlgorithm: false,
   });
 
-
+  const [loadingSteps, setLoadingSteps] = useState([
+    "Scraping website...",
+    "Extracting data...",
+    "Filtering data...",
+    "Removing stopwords...",
+    "Runnning algorithms...",
+    "Counting words...",
+    "Generating word cloud...",
+    "Almost reached..."
+    // Add more steps as needed
+  ]);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const customFontStyle = {
     fontFamily: 'Roboto, sans-serif',
@@ -33,6 +44,22 @@ const Home = () => {
     fontWeight: 'normal', // You can use 'normal' or 'bold' as per your preference
   };
 
+  useEffect(() => {
+    let stepIndex = 0;
+  
+    const showNextStep = () => {
+      setCurrentStep(stepIndex);
+      stepIndex = (stepIndex + 1) % loadingSteps.length;
+    };
+  
+    const interval = setInterval(showNextStep, 2000); // Change the interval duration as needed
+  
+    showNextStep(); // Show the first step immediately
+  
+    return () => {
+      clearInterval(interval);
+    };
+  }, [loadingSteps]);
   
   useEffect(() => {
     let currentIndex = 0;
@@ -48,7 +75,7 @@ const Home = () => {
           setTimeout(() => {
             setAnimatedPlaceholder("");
             setPlaceholderIndex((prevIndex) => (prevIndex + 1) % 2);
-          }, 1000); // Wait 2 seconds before switching to the next placeholder
+          }, 2000); // Wait 2 seconds before switching to the next placeholder
         }
       }, typingSpeed);
     } else {
@@ -137,7 +164,9 @@ const Home = () => {
       }}
     >
       <CircularProgress style={{ margin: "20px", marginBottom: "30px" }} />
-      <Typography variant="h6">Fetching Data, please wait...</Typography>
+      <Typography variant="h6">
+      {loadingSteps[currentStep]}
+    </Typography>
     </div>
   ) : (
     <Container
